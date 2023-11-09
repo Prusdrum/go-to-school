@@ -5,3 +5,6 @@ install:
 
 run-cli:
 	go run ./cmd/cli/main.go
+
+run-rest:
+	go run ./cmd/rest-api/main.go
