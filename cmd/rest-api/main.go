@@ -13,9 +13,11 @@ import (
 func main() {
 	logger := log.New(os.Stdout, "api", log.Flags())
 	helloHandler := entrypoints.NewHello(logger)
+	groupsHandler := entrypoints.NewGroups(logger)
 
 	serveMux := http.NewServeMux()
 	serveMux.Handle("/", helloHandler)
+	serveMux.Handle("/groups", groupsHandler)
 
 	server := &http.Server{
 		Addr:         ":9234",
