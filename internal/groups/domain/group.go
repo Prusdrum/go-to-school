@@ -1,6 +1,8 @@
 package groups
 
 import (
+	"encoding/json"
+	"io"
 	"time"
 )
 
@@ -11,7 +13,14 @@ type Group struct {
 	CreatedAt time.Time `json:"-"`
 }
 
-func GetGroups() []*Group {
+type Groups []*Group
+
+func (g *Groups) ToJSON(w io.Writer) error {
+	encoder := json.NewEncoder(w)
+	return encoder.Encode(g)
+}
+
+func GetGroups() Groups {
 	return testGroups
 }
 

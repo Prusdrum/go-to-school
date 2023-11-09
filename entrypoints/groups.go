@@ -1,7 +1,6 @@
 package entrypoints
 
 import (
-	"encoding/json"
 	groups "go-to-school/main/internal/groups/domain"
 	"log"
 	"net/http"
@@ -17,10 +16,10 @@ func NewGroups(logger *log.Logger) *Groups {
 
 func (entrypoint *Groups) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	groups := groups.GetGroups()
-	jsonRes, err := json.Marshal(groups)
+
+	err := groups.ToJSON(res)
+
 	if err != nil {
 		http.Error(res, "parsing error", http.StatusInternalServerError)
 	}
-
-	res.Write(jsonRes)
 }
