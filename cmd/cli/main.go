@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	groups "go-to-school/main/internal/groups/domain"
+	"time"
+)
 
 func main() {
 	fmt.Println("Hello, go to school")
+	testGroup := groups.Group{
+		ID:        "dsadas",
+		Name:      "dsdasdas",
+		CreatedAt: time.Now(),
+	}
+	fmt.Println("Group created", testGroup.Name)
 }
