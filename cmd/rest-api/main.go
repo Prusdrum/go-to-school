@@ -1,23 +1,18 @@
 package main
 
 import (
-	"fmt"
-	"io"
+	"go-to-school/main/entrypoints"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
-	http.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
-		log.Println("Request received")
-		body, err := io.ReadAll(req.Body)
+	logger := log.New(os.Stdout, "api", log.Flags())
+	helloHandler := entrypoints.NewHello(logger)
 
-		if err != nil {
-			http.Error(res, "Error ocurred", http.StatusBadRequest)
-			return
-		}
+	serveMux := http.NewServeMux()
+	serveMux.Handle("/", helloHandler)
 
-		fmt.Fprintf(res, "Hello %s", body)
-	})
-	http.ListenAndServe(":9234", nil)
+	http.ListenAndServe(":9234", serveMux)
 }
