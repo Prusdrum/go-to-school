@@ -14,4 +14,9 @@ func main() {
 		CreatedAt: time.Now(),
 	}
 	fmt.Println("Group created", testGroup.Name)
+
+	i := 20
+	pointer := &i
+	fmt.Println(i)
+	fmt.Println(*pointer)
 }
