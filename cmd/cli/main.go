@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	// repo, err := inmemory.GroupRepository
+	
 	fmt.Println("Hello, go to school")
 	testGroup := groups.Group{
 		ID:        "dsadas",
