@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"go-to-school/main/entrypoints"
+	"go-to-school/main/infrastructure/tracing"
 	"log"
 	"net/http"
 	"os"
@@ -18,10 +19,12 @@ func main() {
 	serveMux := http.NewServeMux()
 	serveMux.Handle("/", helloHandler)
 	serveMux.Handle("/groups", groupsHandler)
+	
+	traced := tracing.NewTracer(logger, serveMux)
 
 	server := &http.Server{
 		Addr:         ":9234",
-		Handler:      serveMux,
+		Handler:      traced,
 		IdleTimeout:  120 * time.Second,
 		ReadTimeout:  1 * time.Second,
 		WriteTimeout: 1 * time.Second,
