@@ -2,6 +2,7 @@ package entrypoints
 
 import (
 	"fmt"
+	"go-to-school/main/infrastructure/tracing"
 	"io"
 	"log"
 	"net/http"
@@ -17,7 +18,7 @@ func NewHello(log *log.Logger) *Hello {
 }
 
 func (h *Hello) ServeHTTP(res http.ResponseWriter, req *http.Request) {
-	log := h.log
+	log, _ := tracing.TraceLoggerFromContext(req.Context())
 	log.Println("Request received")
 	body, err := io.ReadAll(req.Body)
 
