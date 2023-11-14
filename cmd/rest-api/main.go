@@ -19,8 +19,8 @@ func main() {
 	serveMux := http.NewServeMux()
 	serveMux.Handle("/", helloHandler)
 	serveMux.Handle("/groups", groupsHandler)
-	
-	traced := tracing.NewTracer(logger, serveMux)
+
+	traced := tracing.NewTracingHandler(logger, serveMux)
 
 	server := &http.Server{
 		Addr:         ":9234",

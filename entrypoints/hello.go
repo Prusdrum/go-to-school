@@ -18,7 +18,7 @@ func NewHello(log *log.Logger) *Hello {
 }
 
 func (h *Hello) ServeHTTP(res http.ResponseWriter, req *http.Request) {
-	log, _ := tracing.TraceLoggerFromContext(req.Context())
+	log, _ := tracing.TraceLoggerFromRequest(req)
 	log.Println("Request received")
 	body, err := io.ReadAll(req.Body)
 
