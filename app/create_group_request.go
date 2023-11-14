@@ -10,7 +10,7 @@ type CreateGroupHandler struct {
 	GroupRepository group.Repository
 }
 
-func (handler *CreateGroupHandler) New(Repository group.Repository) *CreateGroupHandler {
+func NewCreateGroupHandler(Repository group.Repository) *CreateGroupHandler {
 	return &CreateGroupHandler{
 		GroupRepository: Repository,
 	}
