@@ -7,12 +7,12 @@ type CreateGroupRequest struct {
 }
 
 type CreateGroupHandler struct {
-	GroupRepository group.Repository
+	groupRepository group.Repository
 }
 
 func NewCreateGroupHandler(Repository group.Repository) *CreateGroupHandler {
 	return &CreateGroupHandler{
-		GroupRepository: Repository,
+		groupRepository: Repository,
 	}
 }
 
@@ -20,5 +20,9 @@ func (handler *CreateGroupHandler) HandleCreateGroup(createGroupRequest *CreateG
 	newGroup := group.CreateGroupRequest{
 		Name: createGroupRequest.Name,
 	}
-	handler.GroupRepository.CreateGroup(&newGroup)
+	handler.groupRepository.CreateGroup(&newGroup)
+}
+
+func (handler *CreateGroupHandler) HandleGetAllGroups() *[]group.Group {
+	return handler.groupRepository.GetGroups()
 }

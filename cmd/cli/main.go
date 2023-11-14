@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"go-to-school/main/app"
 	"go-to-school/main/infrastructure/sqlite"
-	groups "go-to-school/main/internal/groups/domain"
-	"time"
 )
 
 func main() {
@@ -13,16 +11,11 @@ func main() {
 	handleCreateGroupRequest := app.NewCreateGroupHandler(groupRepository)
 	// repo, err := inmemory.GroupRepository
 
-	fmt.Println("Hello, go to school")
-	testGroup := groups.Group{
-		ID:        "dsadas",
-		Name:      "dsdasdas",
-		CreatedAt: time.Now(),
+	createGroupRequest := &app.CreateGroupRequest{
+		Name: "Test group Mateusz",
 	}
-	fmt.Println("Group created", testGroup.Name)
+	handleCreateGroupRequest.HandleCreateGroup(createGroupRequest)
 
-	i := 20
-	pointer := &i
-	fmt.Println(i)
-	fmt.Println(*pointer)
+	groups := handleCreateGroupRequest.HandleGetAllGroups()
+	fmt.Println(groups)
 }
