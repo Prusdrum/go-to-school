@@ -63,6 +63,7 @@ func (repo *GroupRepository) CreateGroup(req *group.CreateGroupRequest) *group.G
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer tx.Commit()
 	stmt, err := tx.Prepare("insert into groups (id, name, created_at) values(?, ?, ?)")
 	defer stmt.Close()
 	group := group.Group{
