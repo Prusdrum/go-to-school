@@ -20,6 +20,8 @@ func NewGroupRepository() *GroupRepository {
 		log.Fatal(err)
 	}
 
+	db.Exec("CREATE TABLE IF NOT EXISTS groups (id TEXT, name TEXT, created_at INTEGER)")
+
 	return &GroupRepository{
 		db: db,
 	}
