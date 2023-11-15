@@ -28,7 +28,7 @@ func NewGroupRepository() *GroupRepository {
 }
 
 func (repo *GroupRepository) GetGroups() *[]group.Group {
-	stmt, err := repo.db.Prepare("SELECT id, name, created_at FROM groups WHERE id = ?")
+	stmt, err := repo.db.Prepare("SELECT id, name, created_at FROM groups")
 	if err != nil {
 		log.Fatal(err)
 	}
