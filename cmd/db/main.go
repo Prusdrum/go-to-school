@@ -3,28 +3,35 @@ package main
 import (
 	"database/sql"
 	"log"
+	"path/filepath"
 
 	"github.com/golang-migrate/migrate/v4"
-	"github.com/golang-migrate/migrate/v4/database/sqlite"
+	"github.com/golang-migrate/migrate/v4/database/sqlite3"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
-	_ "modernc.org/sqlite"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
-	// db, err := sql.Open("sqlite3", filepath.Join("..", "..", "database", "go-to-school.db"))
-	db, err := sql.Open("sqlite", "file:../../database/go-to-school.db")
+	path, err := filepath.Abs("database/go-to-school.sqlite3")
+	if err != nil {
+		log.Fatal("get db path: ", err)
+	}
+	db, err := sql.Open("sqlite3", path)
 	if err != nil {
 		log.Fatal("open db: ", err)
 	}
-	driver, err := sqlite.WithInstance(db, &sqlite.Config{})
+
+	driver, err := sqlite3.WithInstance(db, &sqlite3.Config{})
 	if err != nil {
 		log.Fatal("setup driver: ", err)
 	}
 	m, err := migrate.NewWithDatabaseInstance(
-		"file:///migrations",
-		"sqlite", driver)
+		"file://database/migration",
+		"sqlite3", driver)
+
 	if err != nil {
 		log.Fatal("migrate db: ", err)
 	}
-	m.Up() // or m.Step(2) if you want to explicitly set the number of migrations to run
+	m.Up()
 }
