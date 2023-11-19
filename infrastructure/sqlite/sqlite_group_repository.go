@@ -15,7 +15,7 @@ type GroupRepository struct {
 }
 
 func NewGroupRepository() *GroupRepository {
-	db, err := sql.Open("sqlite3", "./go-to-school-db.db")
+	db, err := sql.Open("sqlite3", "../../database/go-to-school-db.db")
 	if err != nil {
 		log.Fatal(err)
 	}
