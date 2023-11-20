@@ -1,15 +1,22 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"go-to-school/main/app"
 	"go-to-school/main/infrastructure/sqlite"
+	"log"
+	"path/filepath"
 )
 
 func main() {
-	groupRepository := sqlite.NewGroupRepository()
+	path, err := filepath.Abs("database/go-to-school.sqlite3")
+	if err != nil {
+		log.Fatal("get db path: ", err)
+	}
+	db, err := sql.Open("sqlite3", path)
+	groupRepository := sqlite.NewGroupRepository(db)
 	handleCreateGroupRequest := app.NewCreateGroupHandler(groupRepository)
-	// repo, err := inmemory.GroupRepository
 
 	createGroupRequest := &app.CreateGroupRequest{
 		Name: "Test group Mateusz",

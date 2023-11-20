@@ -14,4 +14,3 @@ migrate-new:
 
 migrate-up:
 	go run ./cmd/db/main.go
-	# migrate -database ./database/go-to-school-db.db -path ./database/migration/ up

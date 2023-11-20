@@ -14,14 +14,7 @@ type GroupRepository struct {
 	db *sql.DB
 }
 
-func NewGroupRepository() *GroupRepository {
-	db, err := sql.Open("sqlite3", "../../database/go-to-school-db.db")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	db.Exec("CREATE TABLE IF NOT EXISTS groups (id TEXT, name TEXT, created_at INTEGER)")
-
+func NewGroupRepository(db *sql.DB) *GroupRepository {
 	return &GroupRepository{
 		db: db,
 	}

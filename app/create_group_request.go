@@ -22,7 +22,3 @@ func (handler *CreateGroupHandler) HandleCreateGroup(createGroupRequest *CreateG
 	}
 	handler.groupRepository.CreateGroup(&newGroup)
 }
-
-func (handler *CreateGroupHandler) HandleGetAllGroups() *[]group.Group {
-	return handler.groupRepository.GetGroups()
-}
