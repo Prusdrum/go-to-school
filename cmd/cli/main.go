@@ -1,24 +1,28 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
-	groups "go-to-school/main/internal/groups/domain"
-	"time"
+	"go-to-school/main/app"
+	"go-to-school/main/infrastructure/sqlite"
+	"log"
+	"path/filepath"
 )
 
 func main() {
-	// repo, err := inmemory.GroupRepository
-	
-	fmt.Println("Hello, go to school")
-	testGroup := groups.Group{
-		ID:        "dsadas",
-		Name:      "dsdasdas",
-		CreatedAt: time.Now(),
+	path, err := filepath.Abs("database/go-to-school.sqlite3")
+	if err != nil {
+		log.Fatal("get db path: ", err)
 	}
-	fmt.Println("Group created", testGroup.Name)
+	db, err := sql.Open("sqlite3", path)
+	groupRepository := sqlite.NewGroupRepository(db)
+	handleCreateGroupRequest := app.NewCreateGroupHandler(groupRepository)
 
-	i := 20
-	pointer := &i
-	fmt.Println(i)
-	fmt.Println(*pointer)
+	createGroupRequest := &app.CreateGroupRequest{
+		Name: "Test group Mateusz",
+	}
+	handleCreateGroupRequest.HandleCreateGroup(createGroupRequest)
+
+	groups := handleCreateGroupRequest.HandleGetAllGroups()
+	fmt.Println(groups)
 }
